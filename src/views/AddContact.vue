@@ -86,8 +86,13 @@ import axios from 'axios';
     },
     methods: {
         addContact(){
-          const url = 'http://127.0.0.1:8081/contacts/'
-          axios.post(url,this.User).then((Response)=>{
+          const JWT_token = {
+                              headers: {
+                                  Authorization: "Bearer " + this.$cookies.get('token')
+                              }
+                            }
+          const url = 'https://as-backen-1474.onrender.com/contacts/'
+          axios.post(url,this.User,JWT_token).then((Response)=>{
             alert("Add new User success!")
             this.$router.push('/contacts')
           }).catch((error) => {

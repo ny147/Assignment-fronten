@@ -2,7 +2,7 @@
   
   <div class="ui container">
       <div class="ui padded segment">
-        <div class="ui green padded segment"><a class="ui  big teal ribbon label">Login</a></div>
+        <div class="ui green padded segment"><a class="ui  big teal ribbon label">LOGIN</a></div>
         <div class="ui medium header">Username<span  id = "st-text">*</span></div>
     
       <div class="ui fluid icon input">
@@ -14,6 +14,7 @@
         <input type="password"  placeholder="password" v-model="User.password" required>
       </div>
       <p></p>
+      <!-- <input type="submit" class="ui primary button"  @click="loginAPI" id="bt-login"> -->
       <button  class="ui primary button"  @click="loginAPI" id="bt-login">
           login
       </button>
@@ -47,7 +48,7 @@ export default{
   methods: {
     loginAPI(){
       
-      const url = 'http://127.0.0.1:8081/login'
+      const url = 'https://as-backen-1474.onrender.com/login'
       axios.post(url,this.User)
       .then((r)=>{
 

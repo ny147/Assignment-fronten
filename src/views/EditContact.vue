@@ -79,8 +79,13 @@ export default{
   },
   
   mounted() {
-    const url = 'http://127.0.0.1:8081/contacts/'+ this.$route.params.contactId;
-    axios.get(url)
+    const JWT_token = {
+                              headers: {
+                                  Authorization: "Bearer " + this.$cookies.get('token')
+                              }
+                            }
+    const url = 'https://as-backen-1474.onrender.com/contacts/'+ this.$route.params.contactId;
+    axios.get(url,JWT_token)
     .then((Response) => {
       console.log(Response.data)
       this.User = Response.data[0]
@@ -90,8 +95,14 @@ export default{
   },
   methods: {
       editContact(){
-        const url = 'http://127.0.0.1:8081/contacts/'+ this.$route.params.contactId;
-        axios.put(url,this.User).then((Response)=>{
+        
+        const url = 'https://as-backen-1474.onrender.com/contacts/'+ this.$route.params.contactId;
+        const JWT_token = {
+                              headers: {
+                                  Authorization: "Bearer " + this.$cookies.get('token')
+                              }
+                            }
+        axios.put(url,this.User,JWT_token).then((Response)=>{
           alert("update success!")
           this.$router.push('/contacts')
         }).catch((error) => {

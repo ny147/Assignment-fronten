@@ -16,9 +16,17 @@ export default{
     },
     mounted() {
   
-      var url = 'http://127.0.0.1:8081/contacts/'
-        
-      axios.get(url)
+      // var url = 'http://127.0.0.1:8081/contacts/'
+      var url = 'https://as-backen-1474.onrender.com/contacts/'
+      const JWT_token = {
+        headers: {
+            Authorization: "Bearer " + this.$cookies.get('token')
+        }
+      }
+
+      // this.$cookies.get('token');
+      // console.log(this.$cookies.get('token'))
+      axios.get(url, JWT_token)
       .then((response) => {
         console.log(response.data)
         this.Users = response.data
@@ -34,18 +42,32 @@ export default{
     methods:{
       DeleteUser(contactId){
         if(confirm("are you sure to delete "))
-        {
-                var url =  'http://127.0.0.1:8081/contacts/'+contactId
-                axios.delete(url)
+        {       
+          const JWT_token = {
+                                          headers: {
+                                            Authorization: `Bearer ${this.$cookies.get('token')}`,
+                                          }
+                                        }
+            
+                var url =  'https://as-backen-1474.onrender.com/contacts/' + contactId
+          
+                axios.delete(url,JWT_token)
                 .then(()=> {
                     console.log('Delete user id: '+contactId)
+                     window.location.reload()
                 } )
                 .catch((error)=>{
                     console.error()
+                    alert('what')
                 })
-                window.location.reload()
+
+                 
 
             }
+
+            
+
+               
       }
     }
 
