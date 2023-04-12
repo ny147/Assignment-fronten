@@ -38,6 +38,14 @@
       <div class="ui fluid icon input">
         <input type="text" placeholder="mobile" v-model="User.mobile">
       </div>
+
+      <div class="ui medium header">Email<span  id = "st-text">*</span></div>
+    
+    <div class="ui fluid icon input">
+      <input type="email" placeholder="email" v-model="User.email">
+      
+    </div>
+
    
     <div class="ui medium header">Facebook</div>
    
@@ -53,6 +61,7 @@
 
         <div id="btn-group">
           <button class="ui primary button"  @click="addContact">
+          
           Save
         </button>
         <router-link to= "/contacts">
@@ -86,11 +95,38 @@ import axios from 'axios';
     },
     methods: {
         addContact(){
-          const JWT_token = {
+
+          let pass = true;
+          
+          if(!this.User.cid){
+            alert('require cid !')
+            pass =false
+          }
+          else if(!this.User.firstname){
+            alert('require firstname !')
+            pass =false
+          }else if(!this.User.lastname){
+            alert('require lasttname !')
+            pass =false
+          }else if(!this.User.mobile){
+            alert('require mobile !')
+            pass =false
+          }else if(!this.User.email){
+            alert('require email !')
+            pass =false
+          }else if(!(/^[0-9]+$/.test(this.User.mobile))){
+            alert('Mobile No. match only number !')
+            pass = false
+          }
+          
+          if(pass){
+            const JWT_token = {
                               headers: {
                                   Authorization: "Bearer " + this.$cookies.get('token')
                               }
                             }
+
+          
           const url = 'https://as-backen-1474.onrender.com/contacts/'
           axios.post(url,this.User,JWT_token).then((Response)=>{
             alert("Add new User success!")
@@ -98,6 +134,7 @@ import axios from 'axios';
           }).catch((error) => {
             console.log(error)
           })
+          }
         }
       },
 

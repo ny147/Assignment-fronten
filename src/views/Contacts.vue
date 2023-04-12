@@ -79,7 +79,7 @@ export default{
       <div class = "ui container">
         <div class = "ui padded segment">
           <div class="ui fluid action input">
-                  <a class="ui teal ribbon label">Overview</a><input type="text" placeholder="Search..." v-model="search">
+                  <a class="ui teal ribbon label">Contacts</a><input type="text" placeholder="Search..." v-model="search">
                   <div class="ui button">Search</div>
                   <router-link to="/addcontact" >
                     <div class="ui orange button"><i class="plus icon"></i>Add</div>

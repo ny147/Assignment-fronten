@@ -64,7 +64,7 @@ export default{
         //         storage: localStorage.getItem('token')
         //     }
         // }));
-        this.$cookies.set("token",r.data.token,60*3)
+        this.$cookies.set("token",r.data.token,60*10)
         this.$router.replace('/contacts') 
         // window.location.href = '/contacts'
         }else {

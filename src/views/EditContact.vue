@@ -19,14 +19,21 @@
       <div class="ui fluid icon input">
         <input type="text" placeholder="Firstname" v-model="User.lastname">
       </div>
-  
+      
     <div class="ui medium header">Mobile No.<span  id = "st-text">*</span></div>
     
       <div class="ui fluid icon input">
         <input type="tel" placeholder="mobile" v-model="User.mobile">
         
       </div>
-   
+
+      <div class="ui medium header">Email<span  id = "st-text">*</span></div>
+    
+    <div class="ui fluid icon input">
+      <input type="email" placeholder="email" v-model="User.email">
+      
+    </div>
+
     <div class="ui medium header">Facebook</div>
    
       <div class="ui fluid icon input">
@@ -39,7 +46,7 @@
         <input type="text" placeholder="imageUrl" v-model="User.imageUrl">
       </div>
     
-    
+      
        
         <div id="btn-group">
         
@@ -52,7 +59,7 @@
         
         </div>
        </div>
-   
+       
  
 </template>
 
@@ -94,8 +101,34 @@ export default{
     })
   },
   methods: {
+  
       editContact(){
+
+        let pass = true;
         
+          if(!this.User.cid){
+            alert('require cid !')
+            pass =false
+          }
+          else if(!this.User.firstname){
+          alert('require firstname !')
+          pass =false
+        }else if(!this.User.lastname){
+          alert('require lasttname !')
+          pass =false
+        }else if(!this.User.mobile){
+          alert('require mobile !')
+          pass =false
+        }else if(!this.User.email){
+          alert('require email !')
+          pass =false
+        }else if(!(/^[0-9]+$/.test(this.User.mobile))){
+          alert('Mobile No. match only number !')
+          pass = false
+        }
+      
+
+       if(pass){
         const url = 'https://as-backen-1474.onrender.com/contacts/'+ this.$route.params.contactId;
         const JWT_token = {
                               headers: {
@@ -108,6 +141,7 @@ export default{
         }).catch((error) => {
           console.log(error)
         })
+       }
       }
     },
 
