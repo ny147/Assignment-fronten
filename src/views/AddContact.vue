@@ -1,19 +1,5 @@
 <template>
-    <!-- <div class="about">
-      <h1>Add user</h1>
-      <input type="number" placeholder="contactID"  v-model="User.cid"/><br>
-      <input type="text" placeholder="firstName"  v-model="User.firstname"/><br>
-      <input type="text" placeholder="lastName"  v-model="User.lastname"/><br>
-      <input type="email" placeholder="email"  v-model="User.email"/><br>
-      <input type="text" placeholder="mobile"  v-model="User.mobile"/><br>
-      <input type="text" placeholder="facebook"  v-model="User.facebook"/><br>
-      <input type="text" placeholder="imageUrl"  v-model="User.imageUrl"/><br>
-      <button @click="addContact">Add New User</button>
-      <router-link to="/contacts">
-        <button>Back to User page</button>
-      </router-link>
-    </div> -->
-    <h1 class="ui center aligned header">Add Contact</h1>
+  <!--   <h1 class="ui center aligned header">Add Contact</h1>
   <div class = "ui container">
     <div class="ui medium header">Cid<span  id = "st-text">*</span></div>
     
@@ -60,57 +46,123 @@
         </router-link>
         
         </div>
-       </div>
-  </template>
-  
+       </div> -->
 
-  <script>
-import axios from 'axios';
+  <div id="form-box" class="ui segment">
+    <h2 class="ui header">
+      Contact
+      <a class="ui teal label">Add</a>
+    </h2>
+    <div class="ui divider"></div>
+    <form class="ui form">
+      <div class="field required">
+        <label>Contact ID</label>
+        <input
+          v-model="formInput.cid"
+          type="number"
+          name="contact-id"
+          placeholder="Contact ID"
+        />
+      </div>
+      <div class="field required">
+        <label>First Name</label>
+        <input
+          v-model="formInput.firstname"
+          type="text"
+          name="first-name"
+          placeholder="First Name"
+        />
+      </div>
+      <div class="field required">
+        <label>Last Name</label>
+        <input
+          v-model="formInput.lastname"
+          type="text"
+          name="last-name"
+          placeholder="Last Name"
+        />
+      </div>
+      <div class="field required">
+        <label>Mobile No</label>
+        <input
+          v-model="formInput.mobile"
+          type="text"
+          name="mobile-no"
+          placeholder="Mobile No"
+        />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input
+          v-model="formInput.email"
+          type="text"
+          name="email"
+          placeholder="Email"
+        />
+      </div>
+      <div class="field">
+        <label>Facebook</label>
+        <input
+          v-model="formInput.facebook"
+          type="text"
+          name="facebook"
+          placeholder="Facebook"
+        />
+      </div>
+      <div class="field">
+        <label>Image Url</label>
+        <input
+          v-model="formInput.imageUrl"
+          type="text"
+          name="image-url"
+          placeholder="Image Url"
+        />
+      </div>
+      <div class="ui buttons">
+        <button @click="getForm" class="ui primary button">Save</button>
+        <button class="ui button">Discard</button>
+      </div>
+    </form>
+  </div>
+</template>
 
-  export default{
-    name:'AddContact',
-    data(){
-      return{
-        User: {
-          cid:'',
-          firstname:'',
-          lastname:'',
-          mobile:'',
-          email:'',
-          facebook:'',
-          imageUrl:''
+<script>
+import axios from "axios";
 
-        }
-      }
-      
-    },
-    methods: {
-        addContact(){
-          const JWT_token = {
-                              headers: {
-                                  Authorization: "Bearer " + this.$cookies.get('token')
-                              }
-                            }
-          const url = 'https://as-backen-1474.onrender.com/contacts/'
-          axios.post(url,this.User,JWT_token).then((Response)=>{
-            alert("Add new User success!")
-            this.$router.push('/contacts')
-          }).catch((error) => {
-            console.log(error)
-          })
-        }
+export default {
+  name: "AddContact",
+  data() {
+    return {
+      formInput: {
+        cid: "",
+        firstname: "",
+        lastname: "",
+        mobile: "",
+        email: "",
+        facebook: "",
+        imageUrl: "",
       },
-
-
-  }
-  </script>
-  <style>
-  @media (min-width: 1024px) {
-    .about {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-    }
-  }
-  </style>
-  
+    };
+  },
+  methods: {
+    addContact() {
+      const JWT_token = {
+        headers: {
+          Authorization: "Bearer " + this.$cookies.get("token"),
+        },
+      };
+      const url = "https://as-backen-1474.onrender.com/contacts/";
+      axios
+        .post(url, this.User, JWT_token)
+        .then((Response) => {
+          alert("Add new User success!");
+          this.$router.push("/contacts");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+};
+</script>
+<style></style>
