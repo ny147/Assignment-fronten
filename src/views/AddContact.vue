@@ -119,7 +119,7 @@
         />
       </div>
       <div class="ui buttons">
-        <button @click="getForm" class="ui primary button">Save</button>
+        <button @click="addContact" class="ui primary button">Save</button>
         <button class="ui button">Discard</button>
       </div>
     </form>
