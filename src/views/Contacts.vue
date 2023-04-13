@@ -127,6 +127,7 @@ export default {
 .content {
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 .loader-active {
   position: relative;
