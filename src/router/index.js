@@ -5,10 +5,6 @@ import EditContact from '../views/EditContact.vue'
 import Contacts from '../views/Contacts.vue'
 import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
-
-
-
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
