@@ -65,7 +65,7 @@ export default {
           if (r.data.token) {
             axios.defaults.headers.common["Authorization"] =
               "Bearer " + r.data.token;
-            this.$cookies.set("token", r.data.token, 60 * 3);
+            this.$cookies.set("token", r.data.token, 600);
             alert("Login Successfull");
             this.$router.replace("/contacts");
           } else {
