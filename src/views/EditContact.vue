@@ -1,161 +1,204 @@
 <template>
-
-  <h1 class="ui center aligned header">Edit Contact</h1>
-  <div class = "ui container">
-    <div class="ui medium header">Cid<span  id = "st-text">*</span></div>
-    
-      <div class="ui fluid icon input">
-        <input type="number" placeholder="cid" v-model="User.cid">
+  <div id="form-box" class="ui segment">
+    <h2 class="ui header">
+      Contact
+      <a class="ui teal label">Add</a>
+    </h2>
+    <div class="ui divider"></div>
+    <form @submit.prevent="editContact" class="ui form">
+      <div class="field required">
+        <label>Contact ID</label>
+        <input
+          v-model="User.cid"
+          type="number"
+          name="contact-id"
+          placeholder="Contact ID"
+        />
       </div>
-    
-    <div class="ui medium header">Firstname <span  id = "st-text">*</span></div>
-    
-      <div class="ui fluid icon input">
-        <input type="text" placeholder="Firstname" v-model="User.firstname">
+      <div class="field required">
+        <label>First Name</label>
+        <input
+          v-model="User.firstname"
+          type="text"
+          name="first-name"
+          placeholder="First Name"
+        />
       </div>
-   
-    <div class="ui medium header">Lastname<span  id = "st-text">*</span></div>
-    
-      <div class="ui fluid icon input">
-        <input type="text" placeholder="Firstname" v-model="User.lastname">
+      <div class="field required">
+        <label>Last Name</label>
+        <input
+          v-model="User.lastname"
+          type="text"
+          name="last-name"
+          placeholder="Last Name"
+        />
       </div>
-      
-    <div class="ui medium header">Mobile No.<span  id = "st-text">*</span></div>
-    
-      <div class="ui fluid icon input">
-        <input type="tel" placeholder="mobile" v-model="User.mobile">
-        
+      <div class="field required">
+        <label>Mobile No</label>
+        <input
+          v-model="User.mobile"
+          type="text"
+          name="mobile-no"
+          placeholder="Mobile No"
+        />
       </div>
-
-      <div class="ui medium header">Email<span  id = "st-text">*</span></div>
-    
-    <div class="ui fluid icon input">
-      <input type="email" placeholder="email" v-model="User.email">
-      
-    </div>
-
-    <div class="ui medium header">Facebook</div>
-   
-      <div class="ui fluid icon input">
-        <input type="text" placeholder="facebook" v-model="User.facebook">
+      <div class="field">
+        <label>Email</label>
+        <input
+          v-model="User.email"
+          type="text"
+          name="email"
+          placeholder="Email"
+        />
       </div>
-  
-    <div class="ui medium header">Imageurl</div>
-    
-      <div class="ui fluid icon input">
-        <input type="text" placeholder="imageUrl" v-model="User.imageUrl">
+      <div class="field">
+        <label>Facebook</label>
+        <input
+          v-model="User.facebook"
+          type="text"
+          name="facebook"
+          placeholder="Facebook"
+        />
       </div>
-    
-      
-       
-        <div id="btn-group">
-        
-          <button class="ui primary button"  @click="editContact">
-          Save
-        </button>
-        <router-link to= "/contacts">
+      <div class="field">
+        <label>Image Url</label>
+        <input
+          v-model="User.imageUrl"
+          type="text"
+          name="image-url"
+          placeholder="Image Url"
+        />
+      </div>
+      <div id="btn-group">
+        <button class="ui primary button" type="submit">Save</button>
+        <router-link to="/contacts">
           <button class="ui button">Discard</button>
         </router-link>
-        
-        </div>
-       </div>
-       
- 
+      </div>
+    </form>
+  </div>
+  <div class="loader-active" v-if="isLoading">
+    <div class="ui active inverted dimmer">
+      <div class="ui text loader">Loading</div>
+    </div>
+  </div>
 </template>
 
-
 <script>
-import axios from 'axios';
+import axios from "axios";
 
-export default{
-  name:'EditContact',
-  data(){
-    return{
+export default {
+  name: "EditContact",
+  data() {
+    return {
+      isLoading: false,
       User: {
-        cid:'',
-        firstname:'',
-        lastname:'',
-        mobile:'',
-        email:'',
-        facebook:'',
-        imageUrl:''
-
-      }
-    }
-    
+        cid: "",
+        firstname: "",
+        lastname: "",
+        mobile: "",
+        email: "",
+        facebook: "",
+        imageUrl: "",
+      },
+    };
   },
-  
+
   mounted() {
+    this.isLoading = true;
     const JWT_token = {
-                              headers: {
-                                  Authorization: "Bearer " + this.$cookies.get('token')
-                              }
-                            }
-    const url = 'https://as-backen-1474.onrender.com/contacts/'+ this.$route.params.contactId;
-    axios.get(url,JWT_token)
-    .then((Response) => {
-      console.log(Response.data)
-      this.User = Response.data[0]
-    }).catch((error) => {
-      console.error()
-    })
+      headers: {
+        Authorization: "Bearer " + this.$cookies.get("token"),
+      },
+    };
+    const url =
+      "https://as-backen-1474.onrender.com/contacts/" +
+      this.$route.params.contactId;
+    axios
+      .get(url, JWT_token)
+      .then((Response) => {
+        console.log(Response.data);
+        this.User = Response.data[0];
+      })
+      .catch((error) => {
+        console.error();
+      });
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
   },
   methods: {
-  
-      editContact(){
-
-        let pass = true;
-        
-          if(!this.User.cid){
-            alert('require cid !')
-            pass =false
-          }
-          else if(!this.User.firstname){
-          alert('require firstname !')
-          pass =false
-        }else if(!this.User.lastname){
-          alert('require lasttname !')
-          pass =false
-        }else if(!this.User.mobile){
-          alert('require mobile !')
-          pass =false
-        }else if(!this.User.email){
-          alert('require email !')
-          pass =false
-        }else if(!(/^[0-9]+$/.test(this.User.mobile))){
-          alert('Mobile No. match only number !')
-          pass = false
-        }
-      
-
-       if(pass){
-        const url = 'https://as-backen-1474.onrender.com/contacts/'+ this.$route.params.contactId;
-        const JWT_token = {
-                              headers: {
-                                  Authorization: "Bearer " + this.$cookies.get('token')
-                              }
-                            }
-        axios.put(url,this.User,JWT_token).then((Response)=>{
-          alert("update success!")
-          this.$router.push('/contacts')
-        }).catch((error) => {
-          console.log(error)
-        })
-       }
+    editContact() {
+      this.isLoading = true;
+      let pass = true;
+      if (!this.User.cid) {
+        alert("require cid !");
+        pass = false;
+      } else if (!this.User.firstname) {
+        alert("require firstname !");
+        pass = false;
+      } else if (!this.User.lastname) {
+        alert("require lasttname !");
+        pass = false;
+      } else if (!this.User.mobile) {
+        alert("require mobile !");
+        pass = false;
+      } else if (!this.User.email) {
+        alert("require email !");
+        pass = false;
+      } else if (!/^[0-9]+$/.test(this.User.mobile)) {
+        alert("Mobile No. match only number !");
+        pass = false;
       }
+
+      if (pass) {
+        const url =
+          "https://as-backen-1474.onrender.com/contacts/" +
+          this.$route.params.contactId;
+        const JWT_token = {
+          headers: {
+            Authorization: "Bearer " + this.$cookies.get("token"),
+          },
+        };
+        axios
+          .put(url, this.User, JWT_token)
+          .then((Response) => {
+            alert("update success!");
+            this.$router.push("/contacts");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 2000);
     },
-
-
-}
+  },
+};
 </script>
-<style>
-#btn-group{
+<style scoped>
+#btn-group {
   margin-top: 2%;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-self: center;
 }
-#st-text{
-  color: red;
+
+#form-box {
+  margin: 20px;
+}
+.loader-active {
+  position: relative;
+}
+.loader-active .dimmer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }
 </style>
