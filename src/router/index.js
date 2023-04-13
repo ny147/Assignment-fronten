@@ -35,7 +35,7 @@ const router = createRouter({
     
     {
       path : '/:catchAll(.*)',
-      redirect: '/login'
+      redirect: '/contacts'
     }
   ]
 })
